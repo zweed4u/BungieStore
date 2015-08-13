@@ -1,4 +1,4 @@
-import urllib, json, sys
+import urllib, json, sys, time, datetime
 
 tk='http://bungiestore.com/collections/e3-2015-collection/products/the-taken-king-t-shirt-men'
 how='http://bungiestore.com/collections/featured-house-of-wolves-collection/products/house-of-judgement-t-shirt-men'
@@ -49,13 +49,18 @@ for i in range(numcolorways):
 	#print str(cwinfo[u'title']).rjust(6)+" :: Inventory - " +str(cwinfo[u'inventory_quantity'])+ " :: Checkout link - http://bungiestore.com/cart/"+str(cwinfo[u'id'])+':1'
 	###ADDED###
 	if str(cwinfo[u'title']).lower()==str(size):
-		if cwinfo[u'inventory_quantity']==0:
+		while cwinfo[u'inventory_quantity']==0:	
+			#while - maybe function
 			#None in stock - prompt & recheck/loop
-			print "no " + str(size)+"'s in stock =("
+			print datetime.datetime.fromtimestamp(time.time()).strftime('%m-%d-%Y %H:%M:%S') + " :: No " + str(size).upper()+"s in stock - rechecking in 5 seconds"
+			time.sleep(5)
 			#loop and recheck
-		else:
+		if cwinfo[u'inventory_quantity']!=0:
 			#inventory exists! open in webbrowser
 			print str(cwinfo[u'inventory_quantity']) + ' ' + str(size) + ' are available! - http://bungiestore.com/cart/'+str(cwinfo[u'id'])+':1'
+		else:
+			#jump to while
+			pass
 	else:
 		pass
 	###########
