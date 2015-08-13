@@ -46,22 +46,24 @@ numcolorways=len(data.values()[0].values()[14])
 
 for i in range(numcolorways):
 	cwinfo=(data.values()[0].values()[14][i]) 
-	#print str(cwinfo[u'title']).rjust(6)+" :: Inventory - " +str(cwinfo[u'inventory_quantity'])+ " :: Checkout link - http://bungiestore.com/cart/"+str(cwinfo[u'id'])+':1'
-	###ADDED###
 	if str(cwinfo[u'title']).lower()==str(size):
 		while cwinfo[u'inventory_quantity']==0:	
 			#while - maybe function
 			#None in stock - prompt & recheck/loop
 			print datetime.datetime.fromtimestamp(time.time()).strftime('%m-%d-%Y %H:%M:%S') + " :: No " + str(size).upper()+"s in stock - rechecking in 5 seconds"
 			time.sleep(5)
+			#update page and inventory
+			response = urllib.urlopen(jsonurl)
+			data = json.loads(response.read())
+			cwinfo=(data.values()[0].values()[14][i])
 			#loop and recheck
 		if cwinfo[u'inventory_quantity']!=0:
 			#inventory exists! open in webbrowser
 			print str(cwinfo[u'inventory_quantity']) + ' ' + str(size) + ' are available! - http://bungiestore.com/cart/'+str(cwinfo[u'id'])+':1'
 		else:
 			#jump to while
+			print datetime.datetime.fromtimestamp(time.time()).strftime('%m-%d-%Y %H:%M:%S') + " :: No " + str(size).upper()+"s in stock - rechecking in 5 seconds"
 			pass
 	else:
 		pass
-	###########
 print '\n'
