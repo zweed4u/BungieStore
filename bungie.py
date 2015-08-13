@@ -50,8 +50,8 @@ for i in range(numcolorways):
 		while cwinfo[u'inventory_quantity']==0:	
 			#while - maybe function
 			#None in stock - prompt & recheck/loop
-			print datetime.datetime.fromtimestamp(time.time()).strftime('%m-%d-%Y %H:%M:%S') + " :: No " + str(size).upper()+"s in stock - rechecking in 5 seconds"
-			time.sleep(5)
+			print datetime.datetime.fromtimestamp(time.time()).strftime('%m-%d-%Y %H:%M:%S') + " :: No " + str(size).upper()+"s in stock - rechecking in 15 seconds"
+			time.sleep(15)
 			#update page and inventory
 			response = urllib.urlopen(jsonurl)
 			data = json.loads(response.read())
@@ -62,7 +62,7 @@ for i in range(numcolorways):
 			print str(cwinfo[u'inventory_quantity']) + ' ' + str(size) + ' are available! - http://bungiestore.com/cart/'+str(cwinfo[u'id'])+':1'
 		else:
 			#jump to while
-			print datetime.datetime.fromtimestamp(time.time()).strftime('%m-%d-%Y %H:%M:%S') + " :: No " + str(size).upper()+"s in stock - rechecking in 5 seconds"
+			print datetime.datetime.fromtimestamp(time.time()).strftime('%m-%d-%Y %H:%M:%S') + " :: No " + str(size).upper()+"s in stock - rechecking in 15 seconds"
 			pass
 	else:
 		pass
